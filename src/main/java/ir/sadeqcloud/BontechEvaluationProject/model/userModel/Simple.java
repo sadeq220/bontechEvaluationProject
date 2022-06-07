@@ -27,11 +27,24 @@ public class Simple extends User{
     @Transient
     private Set<GrantedAuthority> grantedAuthorities;
 
+    public Simple(){
+        //empty constructor to comply with POJO
+    }
+    public Simple(String username,String password,BigDecimal initialCredit){
+        this.setUsername(username);
+        this.setPassword(password);
+        this.credit=initialCredit;
+    }
+
     public Set<EndpointPrivilege> getPrivileges() {
         return privileges;
     }
+
     public boolean addPrivilege(EndpointPrivilege endpointPrivilege){
         return privileges.add(endpointPrivilege);
+    }
+    public boolean removePrivilege(EndpointPrivilege endpointPrivilege){
+        return privileges.remove(endpointPrivilege);
     }
 
     public BigDecimal getCredit() {

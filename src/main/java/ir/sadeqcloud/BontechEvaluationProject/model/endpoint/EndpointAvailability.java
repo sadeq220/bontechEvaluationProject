@@ -18,4 +18,20 @@ public class EndpointAvailability {
     //TODO custom constraint of 12 hours
     private LocalTime startOfAvailability;
     private LocalTime endOfAvailability;
+
+    public LocalTime getStartOfAvailability() {
+        return startOfAvailability;
+    }
+
+    public void setStartOfAvailability(LocalTime startOfAvailability) {
+        this.startOfAvailability = startOfAvailability;
+    }
+
+    public LocalTime getEndOfAvailability() {
+        return endOfAvailability;
+    }
+
+    public void setEndOfAvailability(LocalTime endOfAvailability) {
+        this.endOfAvailability = endOfAvailability;
+    }
 }

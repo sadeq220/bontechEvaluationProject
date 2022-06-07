@@ -12,6 +12,14 @@ public class EndpointAvailabilityKey implements Serializable {
     private EndpointName endpointName;
     private LocalDate date;
 
+    public EndpointAvailabilityKey(){
+        //empty constructor to comply with POJO
+    }
+    public EndpointAvailabilityKey(EndpointName endpointName,LocalDate date){
+        this.date=date;
+        this.endpointName=endpointName;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj==this)
