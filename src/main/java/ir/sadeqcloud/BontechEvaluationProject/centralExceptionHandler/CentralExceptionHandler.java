@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class CentralExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ServiceNotAvailableAtTheMoment.class)
     public ResponseEntity<SimpleUSerExceptionResponse> serviceNotAvailableHandler(ServiceNotAvailableAtTheMoment serviceNotAvailableAtTheMoment){
-        SimpleUSerExceptionResponse simpleUSerExceptionResponse = new SimpleUSerExceptionResponse(serviceNotAvailableAtTheMoment.getEndpointName(), "service not available at the moment!");
+        SimpleUSerExceptionResponse simpleUSerExceptionResponse = new SimpleUSerExceptionResponse(serviceNotAvailableAtTheMoment.getCommercialServiceName(), "service not available at the moment!");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(simpleUSerExceptionResponse);
     }
     @ExceptionHandler(AdminTransactionRolledBackException.class)

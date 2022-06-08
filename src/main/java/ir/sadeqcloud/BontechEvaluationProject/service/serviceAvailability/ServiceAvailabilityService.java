@@ -1,9 +1,9 @@
 package ir.sadeqcloud.BontechEvaluationProject.service.serviceAvailability;
 
-import ir.sadeqcloud.BontechEvaluationProject.model.endpoint.EndpointName;
+import ir.sadeqcloud.BontechEvaluationProject.model.commercialService.CommercialServiceName;
 
 import java.time.LocalDateTime;
 
 public interface ServiceAvailabilityService {
-    boolean isServiceAvailable(EndpointName endpointName, LocalDateTime localDateTime);
+    boolean isServiceAvailable(CommercialServiceName commercialServiceName, LocalDateTime localDateTime);
 }

@@ -1,9 +1,9 @@
 package ir.sadeqcloud.BontechEvaluationProject.service.serviceAvailability;
 
-import ir.sadeqcloud.BontechEvaluationProject.model.endpoint.EndpointAvailability;
-import ir.sadeqcloud.BontechEvaluationProject.model.endpoint.EndpointAvailabilityKey;
-import ir.sadeqcloud.BontechEvaluationProject.model.endpoint.EndpointName;
-import ir.sadeqcloud.BontechEvaluationProject.repository.endpointRepository.EndpointAvailabilityRepository;
+import ir.sadeqcloud.BontechEvaluationProject.model.commercialService.CommercialServiceAvailability;
+import ir.sadeqcloud.BontechEvaluationProject.model.commercialService.CommercialServiceAvailabilityKey;
+import ir.sadeqcloud.BontechEvaluationProject.model.commercialService.CommercialServiceName;
+import ir.sadeqcloud.BontechEvaluationProject.repository.commercialServiceRepository.CommercialServiceAvailabilityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,21 +15,21 @@ import java.util.Optional;
 @Service
 public class ServiceAvailabilityServiceCacheable  implements ServiceAvailabilityService{
 
-    private final EndpointAvailabilityRepository endpointAvailabilityRepository;
+    private final CommercialServiceAvailabilityRepository endpointAvailabilityRepository;
     @Autowired
-    public ServiceAvailabilityServiceCacheable(EndpointAvailabilityRepository endpointAvailabilityRepository){
+    public ServiceAvailabilityServiceCacheable(CommercialServiceAvailabilityRepository endpointAvailabilityRepository){
         this.endpointAvailabilityRepository=endpointAvailabilityRepository;
     }
     @Override
-    public boolean isServiceAvailable(EndpointName endpointName, LocalDateTime localDateTime) {
+    public boolean isServiceAvailable(CommercialServiceName commercialServiceName, LocalDateTime localDateTime) {
         LocalDate date = localDateTime.toLocalDate();
-        EndpointAvailabilityKey endpointAvailabilityKey = new EndpointAvailabilityKey(endpointName, date);
-        Optional<EndpointAvailability> endpointAvailabilityOptional = endpointAvailabilityRepository.findById(endpointAvailabilityKey);
+        CommercialServiceAvailabilityKey commercialServiceAvailabilityKey = new CommercialServiceAvailabilityKey(commercialServiceName, date);
+        Optional<CommercialServiceAvailability> endpointAvailabilityOptional = endpointAvailabilityRepository.findById(commercialServiceAvailabilityKey);
         if (!endpointAvailabilityOptional.isPresent())
         return false;
-        EndpointAvailability endpointAvailability = endpointAvailabilityOptional.get();
+        CommercialServiceAvailability commercialServiceAvailability = endpointAvailabilityOptional.get();
 
-        return isInTimeInterval(endpointAvailability.getStartOfAvailability(),endpointAvailability.getEndOfAvailability(),localDateTime.toLocalTime());
+        return isInTimeInterval(commercialServiceAvailability.getStartOfAvailability(), commercialServiceAvailability.getEndOfAvailability(),localDateTime.toLocalTime());
     }
 
     private boolean isInTimeInterval(LocalTime startOfInterval,LocalTime endOfInterval,LocalTime specifiedTime){

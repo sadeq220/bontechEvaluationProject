@@ -1,7 +1,7 @@
 package ir.sadeqcloud.BontechEvaluationProject.controller;
 
 import ir.sadeqcloud.BontechEvaluationProject.controller.dto.SimpleUserDto;
-import ir.sadeqcloud.BontechEvaluationProject.service.AdminServiceContract;
+import ir.sadeqcloud.BontechEvaluationProject.service.adminService.AdminServiceContract;
 import ir.sadeqcloud.BontechEvaluationProject.service.dto.OperationResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

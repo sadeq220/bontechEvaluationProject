@@ -1,14 +1,14 @@
 package ir.sadeqcloud.BontechEvaluationProject.custException;
 
-import ir.sadeqcloud.BontechEvaluationProject.model.endpoint.EndpointName;
+import ir.sadeqcloud.BontechEvaluationProject.model.commercialService.CommercialServiceName;
 
 public class ServiceNotAvailableAtTheMoment extends RuntimeException {
-    private EndpointName endpointName;
-    public ServiceNotAvailableAtTheMoment(EndpointName endpointName){
-        this.endpointName=endpointName;
+    private CommercialServiceName commercialServiceName;
+    public ServiceNotAvailableAtTheMoment(CommercialServiceName commercialServiceName){
+        this.commercialServiceName = commercialServiceName;
     }
 
-    public EndpointName getEndpointName() {
-        return endpointName;
+    public CommercialServiceName getCommercialServiceName() {
+        return commercialServiceName;
     }
 }

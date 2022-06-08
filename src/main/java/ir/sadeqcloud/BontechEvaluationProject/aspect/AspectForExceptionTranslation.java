@@ -1,7 +1,7 @@
 package ir.sadeqcloud.BontechEvaluationProject.aspect;
 
 import ir.sadeqcloud.BontechEvaluationProject.custException.AdminTransactionRolledBackException;
-import ir.sadeqcloud.BontechEvaluationProject.service.AdminServiceContract;
+import ir.sadeqcloud.BontechEvaluationProject.service.adminService.AdminServiceContract;
 import ir.sadeqcloud.BontechEvaluationProject.service.dto.OperationResult;
 import ir.sadeqcloud.BontechEvaluationProject.utils.OperationResultContextHolder;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -21,7 +21,7 @@ public class AspectForExceptionTranslation {
         this.adminServiceContract=adminServiceContract;
     }
 
-    @Around("execution( * ir.sadeqcloud.BontechEvaluationProject.service.AdminServiceLayer.*(..))")
+    @Around("execution( * ir.sadeqcloud.BontechEvaluationProject.service.adminService.AdminServiceLayer.*(..))")
     public Object adminTransactionExceptionTranslation(ProceedingJoinPoint proceedingJoinPoint){
         try {
             return proceedingJoinPoint.proceed();

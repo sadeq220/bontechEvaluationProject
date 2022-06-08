@@ -1,18 +1,18 @@
 package ir.sadeqcloud.BontechEvaluationProject.centralExceptionHandler;
 
-import ir.sadeqcloud.BontechEvaluationProject.model.endpoint.EndpointName;
+import ir.sadeqcloud.BontechEvaluationProject.model.commercialService.CommercialServiceName;
 
 public class SimpleUSerExceptionResponse {
-    private EndpointName endpointName;
+    private CommercialServiceName commercialServiceName;
     private String message;
 
-    public SimpleUSerExceptionResponse(EndpointName endpointName, String message) {
-        this.endpointName = endpointName;
+    public SimpleUSerExceptionResponse(CommercialServiceName commercialServiceName, String message) {
+        this.commercialServiceName = commercialServiceName;
         this.message = message;
     }
 
-    public EndpointName getEndpointName() {
-        return endpointName;
+    public CommercialServiceName getCommercialServiceName() {
+        return commercialServiceName;
     }
 
     public String getMessage() {

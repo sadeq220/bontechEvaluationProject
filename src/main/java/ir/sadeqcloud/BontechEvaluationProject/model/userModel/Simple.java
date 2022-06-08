@@ -1,6 +1,6 @@
 package ir.sadeqcloud.BontechEvaluationProject.model.userModel;
 
-import ir.sadeqcloud.BontechEvaluationProject.model.endpoint.EndpointPrivilege;
+import ir.sadeqcloud.BontechEvaluationProject.model.commercialService.CommercialServicePrivilege;
 import ir.sadeqcloud.BontechEvaluationProject.utils.StringToPrivilegeConverter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -8,7 +8,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -20,7 +19,7 @@ public class Simple extends User{
      */
     @Convert(converter = StringToPrivilegeConverter.class)
     @Column(name = "privileges",columnDefinition = "VARCHAR(100)")
-    private Set<EndpointPrivilege> privileges;
+    private Set<CommercialServicePrivilege> privileges;
 
     private BigDecimal credit;
 
@@ -36,14 +35,14 @@ public class Simple extends User{
         this.credit=initialCredit;
     }
 
-    public Set<EndpointPrivilege> getPrivileges() {
+    public Set<CommercialServicePrivilege> getPrivileges() {
         return privileges;
     }
 
-    public boolean addPrivilege(EndpointPrivilege endpointPrivilege){
+    public boolean addPrivilege(CommercialServicePrivilege endpointPrivilege){
         return privileges.add(endpointPrivilege);
     }
-    public boolean removePrivilege(EndpointPrivilege endpointPrivilege){
+    public boolean removePrivilege(CommercialServicePrivilege endpointPrivilege){
         return privileges.remove(endpointPrivilege);
     }
 

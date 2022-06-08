@@ -1,0 +1,10 @@
+package ir.sadeqcloud.BontechEvaluationProject.repository.commercialServiceRepository;
+
+import ir.sadeqcloud.BontechEvaluationProject.model.commercialService.CommercialServiceAvailability;
+import ir.sadeqcloud.BontechEvaluationProject.model.commercialService.CommercialServiceAvailabilityKey;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface CommercialServiceAvailabilityRepository extends JpaRepository<CommercialServiceAvailability, CommercialServiceAvailabilityKey> {
+}

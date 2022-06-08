@@ -1,9 +1,8 @@
-package ir.sadeqcloud.BontechEvaluationProject.service;
+package ir.sadeqcloud.BontechEvaluationProject.service.adminService;
 
 import ir.sadeqcloud.BontechEvaluationProject.controller.dto.SimpleUserDto;
-import ir.sadeqcloud.BontechEvaluationProject.custException.AdminTransactionRolledBackException;
 import ir.sadeqcloud.BontechEvaluationProject.model.userModel.Simple;
-import ir.sadeqcloud.BontechEvaluationProject.repository.endpointRepository.EndpointAvailabilityRepository;
+import ir.sadeqcloud.BontechEvaluationProject.repository.commercialServiceRepository.CommercialServiceAvailabilityRepository;
 import ir.sadeqcloud.BontechEvaluationProject.repository.userRepository.UserRepository;
 import ir.sadeqcloud.BontechEvaluationProject.service.dto.OperationResult;
 import ir.sadeqcloud.BontechEvaluationProject.service.dto.ServiceOperationResult;
@@ -16,14 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @PreAuthorize("hasRole('ADMIN')")
-public class AdminServiceLayer implements AdminServiceContract{
+public class AdminServiceLayer implements AdminServiceContract {
     private final UserRepository userRepository;
-    private final EndpointAvailabilityRepository endpointAvailabilityRepository;
+    private final CommercialServiceAvailabilityRepository commercialServiceAvailabilityRepository;
     private final ApplicationEventPublisher applicationEventPublisher;
 
     @Autowired
-    public AdminServiceLayer(ApplicationEventPublisher applicationEventPublisher,UserRepository userRepository,EndpointAvailabilityRepository endpointAvailabilityRepository){
-        this.endpointAvailabilityRepository=endpointAvailabilityRepository;
+    public AdminServiceLayer(ApplicationEventPublisher applicationEventPublisher, UserRepository userRepository, CommercialServiceAvailabilityRepository commercialServiceAvailabilityRepository){
+        this.commercialServiceAvailabilityRepository = commercialServiceAvailabilityRepository;
         this.userRepository=userRepository;
         this.applicationEventPublisher=applicationEventPublisher;
     }

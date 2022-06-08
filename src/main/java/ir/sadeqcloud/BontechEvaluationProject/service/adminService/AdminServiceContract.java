@@ -1,4 +1,4 @@
-package ir.sadeqcloud.BontechEvaluationProject.service;
+package ir.sadeqcloud.BontechEvaluationProject.service.adminService;
 
 import ir.sadeqcloud.BontechEvaluationProject.controller.dto.SimpleUserDto;
 import ir.sadeqcloud.BontechEvaluationProject.service.dto.OperationResult;
