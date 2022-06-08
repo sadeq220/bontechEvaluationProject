@@ -2,7 +2,8 @@ package ir.sadeqcloud.BontechEvaluationProject.model.commercialService;
 
 public enum CommercialServiceName {
 
-    SEND_SMS(CommercialServicePrivilege.SEND_SMS);
+    SEND_SMS(CommercialServicePrivilege.SEND_SMS),
+    SEND_EMAIL(CommercialServicePrivilege.SEND_EMAIL);
 
     private CommercialServicePrivilege privilege;
 
