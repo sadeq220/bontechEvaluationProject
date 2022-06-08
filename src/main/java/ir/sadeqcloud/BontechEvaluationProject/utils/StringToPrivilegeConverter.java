@@ -12,6 +12,8 @@ public class StringToPrivilegeConverter implements AttributeConverter<Set<Endpoi
 
     @Override
     public String convertToDatabaseColumn(Set<EndpointPrivilege> endpointPrivileges) {
+        if (endpointPrivileges==null)
+            return null;
         Optional<String> simpleUSerPrivileges = endpointPrivileges.stream()
                 .map(endpointPrivilege -> endpointPrivilege.name())
                 .reduce((privilege1, privilege2) -> privilege1 + "," + privilege2);
