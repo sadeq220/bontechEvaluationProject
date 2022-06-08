@@ -2,16 +2,16 @@ package ir.sadeqcloud.BontechEvaluationProject.service.dto;
 
 import java.time.LocalDateTime;
 
-    public class ServiceOperationResult implements OperationResult{
+public class ServiceOperationResult implements OperationResult{
     private boolean isSuccessful;
     private String message;
-    private String modelName;
+    private String operationName;
     private LocalDateTime operationPerformTime;
 
-    public ServiceOperationResult(boolean isSuccessful, String message, String modelName) {
+    public ServiceOperationResult(boolean isSuccessful, String message, String operationName) {
         this.isSuccessful = isSuccessful;
         this.message = message;
-        this.modelName = modelName;
+        this.operationName = operationName;
         this.operationPerformTime=LocalDateTime.now();
     }
 
@@ -36,8 +36,8 @@ import java.time.LocalDateTime;
     }
 
     @Override
-    public String getModelName() {
-        return modelName;
+    public String getOperationName() {
+        return operationName;
     }
 
     @Override

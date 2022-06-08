@@ -30,14 +30,14 @@ public class AdminServiceLayer implements AdminServiceContract {
     @Override
     @Transactional
     public OperationResult createUser(SimpleUserDto simpleUserDto) {
-        OperationResult operationResult = createTransactionalEventAndPublishIt("simpleUser", "user created!");
+        OperationResult operationResult = createTransactionalEventAndPublishIt("simpleUserCreation", "user created!");
         Simple actualEntity = simpleUserDto.getActualEntity();
         userRepository.save(actualEntity);
         return operationResult;
     }
 
-    private OperationResult createTransactionalEventAndPublishIt(String modelName,String message){
-        ServiceOperationResult serviceOperationResult = new ServiceOperationResult(true, message, modelName);
+    private OperationResult createTransactionalEventAndPublishIt(String operationName,String message){
+        ServiceOperationResult serviceOperationResult = new ServiceOperationResult(true, message, operationName);
         publishTransactionalEvent(serviceOperationResult);
         OperationResultContextHolder.setOperationResult(serviceOperationResult);
         return serviceOperationResult;

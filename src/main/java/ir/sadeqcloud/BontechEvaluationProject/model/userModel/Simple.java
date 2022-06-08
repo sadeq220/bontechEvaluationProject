@@ -50,8 +50,9 @@ public class Simple extends User{
         return credit;
     }
 
-    public void setCredit(BigDecimal credit) {
-        this.credit = credit;
+    public BigDecimal subtractCostFromCredit(BigDecimal cost){
+        this.credit=this.credit.subtract(cost);
+        return this.credit;
     }
 
     /**

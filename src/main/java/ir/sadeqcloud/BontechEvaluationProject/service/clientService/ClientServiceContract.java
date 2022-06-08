@@ -1,7 +1,8 @@
 package ir.sadeqcloud.BontechEvaluationProject.service.clientService;
 
-import ir.sadeqcloud.BontechEvaluationProject.service.dto.OperationResult;
+import ir.sadeqcloud.BontechEvaluationProject.model.commercialService.CommercialServiceName;
+import ir.sadeqcloud.BontechEvaluationProject.service.dto.CommercialServiceRequiredInput;
 
 public interface ClientServiceContract {
-    OperationResult send_SMS(String SMS);
+    void useCommercialService(CommercialServiceName commercialServiceName, CommercialServiceRequiredInput commercialServiceRequiredInput);
 }

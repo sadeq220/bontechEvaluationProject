@@ -7,6 +7,6 @@ public interface OperationResult {
     void setIsSuccessful(boolean isSuccessful);
     String getMessage();
     void setMessage(String message);
-    String getModelName();
+    String getOperationName();
     LocalDateTime getOperationPerformTime();
 }
