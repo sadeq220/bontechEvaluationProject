@@ -1,21 +1,25 @@
 package ir.sadeqcloud.BontechEvaluationProject.model.commercialService;
 
-import javax.persistence.Embeddable;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 
 @Embeddable
 public class CommercialServiceAvailabilityKey implements Serializable {
-    @Enumerated(EnumType.STRING)
-    private CommercialServiceName commercialServiceName;
+    @Column(name = "commercial_service_name")
+    private String commercialServiceName;
     private LocalDate date;
+
+    @OneToOne(fetch = FetchType.LAZY,orphanRemoval = true)
+    @JoinColumn(name = "commercial_service_name")
+    private CommercialService commercialService;//enforce ForeignKey constraint
 
     public CommercialServiceAvailabilityKey(){
         //empty constructor to comply with POJO
     }
-    public CommercialServiceAvailabilityKey(CommercialServiceName commercialServiceName, LocalDate date){
+    public CommercialServiceAvailabilityKey(String commercialServiceName, LocalDate date){
         this.date=date;
         this.commercialServiceName = commercialServiceName;
     }
@@ -26,10 +30,17 @@ public class CommercialServiceAvailabilityKey implements Serializable {
             return true;
         if (!(obj instanceof CommercialServiceAvailabilityKey))
             return false;
-        CommercialServiceAvailabilityKey endpointAvailabilityKey = (CommercialServiceAvailabilityKey) obj;
-        if (this.date==null)
+        CommercialServiceAvailabilityKey commercialServiceAvailabilityKey = (CommercialServiceAvailabilityKey) obj;
+        if (this.date==null && this.commercialServiceName==null)
             return false;
-        return this.date.isEqual(endpointAvailabilityKey.date) && (this.commercialServiceName == endpointAvailabilityKey.commercialServiceName);
+        return this.date.isEqual(commercialServiceAvailabilityKey.date) && (this.commercialServiceName.equals( commercialServiceAvailabilityKey.commercialServiceName));
+    }
 
+    @Override
+    public int hashCode() {
+        HashCodeBuilder hashCodeBuilder = new HashCodeBuilder();
+        hashCodeBuilder.append(commercialServiceName);
+        hashCodeBuilder.append(date);
+        return hashCodeBuilder.toHashCode();
     }
 }

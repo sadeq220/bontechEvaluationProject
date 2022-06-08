@@ -2,7 +2,6 @@ package ir.sadeqcloud.BontechEvaluationProject.service.serviceAvailability;
 
 import ir.sadeqcloud.BontechEvaluationProject.model.commercialService.CommercialServiceAvailability;
 import ir.sadeqcloud.BontechEvaluationProject.model.commercialService.CommercialServiceAvailabilityKey;
-import ir.sadeqcloud.BontechEvaluationProject.model.commercialService.CommercialServiceName;
 import ir.sadeqcloud.BontechEvaluationProject.repository.commercialServiceRepository.CommercialServiceAvailabilityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,7 @@ public class ServiceAvailabilityServiceCacheable  implements ServiceAvailability
         this.endpointAvailabilityRepository=endpointAvailabilityRepository;
     }
     @Override
-    public boolean isServiceAvailable(CommercialServiceName commercialServiceName, LocalDateTime localDateTime) {
+    public boolean isServiceAvailable(String commercialServiceName, LocalDateTime localDateTime) {
         LocalDate date = localDateTime.toLocalDate();
         CommercialServiceAvailabilityKey commercialServiceAvailabilityKey = new CommercialServiceAvailabilityKey(commercialServiceName, date);
         Optional<CommercialServiceAvailability> endpointAvailabilityOptional = endpointAvailabilityRepository.findById(commercialServiceAvailabilityKey);

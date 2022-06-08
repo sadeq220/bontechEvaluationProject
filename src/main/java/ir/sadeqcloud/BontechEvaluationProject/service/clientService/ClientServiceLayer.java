@@ -1,8 +1,6 @@
 package ir.sadeqcloud.BontechEvaluationProject.service.clientService;
 
-import ir.sadeqcloud.BontechEvaluationProject.externalizedConfiguration.CommercialServiceConfig;
-import ir.sadeqcloud.BontechEvaluationProject.externalizedConfiguration.dto.CommercialServiceProperties;
-import ir.sadeqcloud.BontechEvaluationProject.model.commercialService.CommercialServiceName;
+import ir.sadeqcloud.BontechEvaluationProject.model.commercialService.CommercialService;
 import ir.sadeqcloud.BontechEvaluationProject.model.userModel.Simple;
 import ir.sadeqcloud.BontechEvaluationProject.model.userModel.User;
 import ir.sadeqcloud.BontechEvaluationProject.repository.userRepository.UserRepository;
@@ -24,22 +22,20 @@ public class ClientServiceLayer implements ClientServiceContract{
 
    private final UserRepository userRepository;
    private final ApplicationEventPublisher applicationEventPublisher;
-   private final CommercialServiceConfig commercialServiceConfig;
+
     @Autowired
-    public ClientServiceLayer(UserRepository userRepository, ApplicationEventPublisher applicationEventPublisher, CommercialServiceConfig commercialServiceConfig) {
+    public ClientServiceLayer(UserRepository userRepository, ApplicationEventPublisher applicationEventPublisher) {
         this.userRepository = userRepository;
         this.applicationEventPublisher = applicationEventPublisher;
-        this.commercialServiceConfig = commercialServiceConfig;
     }
-    @PreAuthorize("hasAuthority(commercialServiceName.correlatePrivilege)")
+    @PreAuthorize("hasAuthority(commercialService.commercialServiceName)")
     @Transactional(propagation = Propagation.MANDATORY)// enforce existence of AbstractionLayer
     @Override
-    public void useCommercialService(CommercialServiceName commercialServiceName, CommercialServiceRequiredInput commercialServicePerformInput) {
-        CommercialServiceProperties commercialServiceProperties = commercialServiceConfig.getCommercialServiceMap().get(commercialServiceName);
+    public void useCommercialService(CommercialService commercialService, CommercialServiceRequiredInput commercialServicePerformInput) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Optional<User> simpleUserOptional = userRepository.findById(authentication.getName());
         Simple simpleUser = ((Simple) simpleUserOptional.get());
         // do commercial service e.g. send_SMS
-        simpleUser.subtractCostFromCredit(commercialServiceProperties.getCost());
+        simpleUser.subtractCostFromCredit(commercialService.getCost());
     }
 }
