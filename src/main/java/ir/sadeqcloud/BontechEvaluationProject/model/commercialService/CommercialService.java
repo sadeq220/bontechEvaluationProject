@@ -17,6 +17,16 @@ public class CommercialService {
     private BigDecimal cost;
     private Long usageLimitation;
 
+    public CommercialService() {
+        //empty constructor to comply with POJO
+    }
+
+    public CommercialService(String commercialServiceName, BigDecimal cost, Long usageLimitation) {
+        this.commercialServiceName = commercialServiceName;
+        this.cost = cost;
+        this.usageLimitation = usageLimitation;
+    }
+
     public String getCommercialServiceName() {
         return commercialServiceName;
     }

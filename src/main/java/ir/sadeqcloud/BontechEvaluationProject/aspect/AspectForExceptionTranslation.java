@@ -25,8 +25,9 @@ public class AspectForExceptionTranslation {
     public Object adminTransactionExceptionTranslation(ProceedingJoinPoint proceedingJoinPoint){
         try {
             return proceedingJoinPoint.proceed();
-        } catch (Throwable e) { //Exception translation
+        } catch (Throwable e) { //Exception translation , for security reasons and comprehensive api
             OperationResult operationResult = OperationResultContextHolder.getOperationResult();
+            operationResult.setMessage(e.getMessage());
             // clear context on transactionalEvent side
             throw new AdminTransactionRolledBackException(operationResult);
         }

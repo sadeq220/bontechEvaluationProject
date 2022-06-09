@@ -16,7 +16,9 @@ public class AdminTransactionCallback {
     @TransactionalEventListener(phase = TransactionPhase.AFTER_ROLLBACK)
     public void transactionUnsuccessful(OperationResult operationResult){
         operationResult.setIsSuccessful(false);
-        operationResult.setMessage("someThing went wrong!");
+        if (operationResult.getMessage()==null) {
+            operationResult.setMessage("someThing went wrong!");
+        }
         OperationResultContextHolder.clearContext();
     }
 }

@@ -1,5 +1,7 @@
 package ir.sadeqcloud.BontechEvaluationProject.controller;
 
+import ir.sadeqcloud.BontechEvaluationProject.controller.dto.CommercialServiceDto;
+import ir.sadeqcloud.BontechEvaluationProject.controller.dto.ServiceAvailabilityDto;
 import ir.sadeqcloud.BontechEvaluationProject.controller.dto.SimpleUserDto;
 import ir.sadeqcloud.BontechEvaluationProject.service.adminService.AdminServiceContract;
 import ir.sadeqcloud.BontechEvaluationProject.service.dto.OperationResult;
@@ -27,9 +29,21 @@ public class AdminApis {
     public AdminApis(AdminServiceContract adminServiceContract){
         this.adminServiceContract=adminServiceContract;
     }
+
     @PostMapping("/create/user")
-    public ResponseEntity createUser(@RequestBody SimpleUserDto simpleUserDto){
+    public ResponseEntity<OperationResult> createUser(@RequestBody SimpleUserDto simpleUserDto){
         OperationResult userCreated = adminServiceContract.createUser(simpleUserDto);
         return ResponseEntity.ok(userCreated);
     }
+    @PostMapping("/create/availability")
+    public ResponseEntity<OperationResult> createServiceAvailability(@RequestBody ServiceAvailabilityDto serviceAvailabilityDto){
+        OperationResult serviceAvailabilityCreated = adminServiceContract.createServiceAvailability(serviceAvailabilityDto);
+        return ResponseEntity.ok(serviceAvailabilityCreated);
+    }
+    @PostMapping("/create/service")
+    public ResponseEntity<OperationResult> createCommercialService(@RequestBody CommercialServiceDto commercialServiceDto){
+        OperationResult serviceAvailabilityCreated = adminServiceContract.createCommercialService(commercialServiceDto);
+        return ResponseEntity.ok(serviceAvailabilityCreated);
+    }
+
 }
