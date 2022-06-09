@@ -12,11 +12,11 @@ import java.time.LocalTime;
 import java.util.Optional;
 
 @Service
-public class ServiceAvailabilityServiceCacheable  implements ServiceAvailabilityService{
+public class CommercialServiceAvailabilityCacheable implements CommercialServiceAvailabilityContract {
 
     private final CommercialServiceAvailabilityRepository endpointAvailabilityRepository;
     @Autowired
-    public ServiceAvailabilityServiceCacheable(CommercialServiceAvailabilityRepository endpointAvailabilityRepository){
+    public CommercialServiceAvailabilityCacheable(CommercialServiceAvailabilityRepository endpointAvailabilityRepository){
         this.endpointAvailabilityRepository=endpointAvailabilityRepository;
     }
     @Override

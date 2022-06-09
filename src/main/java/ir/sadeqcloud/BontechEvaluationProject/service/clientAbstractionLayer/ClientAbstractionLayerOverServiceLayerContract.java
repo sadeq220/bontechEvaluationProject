@@ -1,4 +1,8 @@
 package ir.sadeqcloud.BontechEvaluationProject.service.clientAbstractionLayer;
 
+import ir.sadeqcloud.BontechEvaluationProject.service.dto.CommercialServiceRequiredInput;
+import ir.sadeqcloud.BontechEvaluationProject.service.dto.CommercialServiceResultContract;
+
 public interface ClientAbstractionLayerOverServiceLayerContract {
+    CommercialServiceResultContract useCommercialService(String commercialServiceName, CommercialServiceRequiredInput commercialServiceRequiredInput);
 }
