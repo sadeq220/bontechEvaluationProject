@@ -1,8 +1,6 @@
 package ir.sadeqcloud.BontechEvaluationProject.model.commercialService;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalTime;
 
 @Entity
@@ -18,6 +16,10 @@ public class CommercialServiceAvailability {
     //TODO custom constraint of 12 hours
     private LocalTime startOfAvailability;
     private LocalTime endOfAvailability;
+
+    @OneToOne(fetch = FetchType.LAZY,orphanRemoval = true)
+    @MapsId("commercialServiceName")
+    private CommercialService commercialService;//enforce ForeignKey constraint
 
     public LocalTime getStartOfAvailability() {
         return startOfAvailability;

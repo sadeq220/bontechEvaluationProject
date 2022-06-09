@@ -12,9 +12,7 @@ public class CommercialServiceAvailabilityKey implements Serializable {
     private String commercialServiceName;
     private LocalDate date;
 
-    @OneToOne(fetch = FetchType.LAZY,orphanRemoval = true)
-    @JoinColumn(name = "commercial_service_name")
-    private CommercialService commercialService;//enforce ForeignKey constraint
+
 
     public CommercialServiceAvailabilityKey(){
         //empty constructor to comply with POJO
