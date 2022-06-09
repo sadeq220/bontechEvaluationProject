@@ -1,11 +1,13 @@
 package ir.sadeqcloud.BontechEvaluationProject.service.clientAbstractionLayer;
 
+import ir.sadeqcloud.BontechEvaluationProject.custException.ClientLimitPassedException;
 import ir.sadeqcloud.BontechEvaluationProject.custException.CommercialServiceNotReachableException;
 import ir.sadeqcloud.BontechEvaluationProject.custException.ServiceNotAvailableAtTheMoment;
 import ir.sadeqcloud.BontechEvaluationProject.model.commercialService.CommercialService;
 import ir.sadeqcloud.BontechEvaluationProject.repository.commercialServiceRepository.CommercialServiceRepository;
 import ir.sadeqcloud.BontechEvaluationProject.service.clientService.ClientServiceContract;
 import ir.sadeqcloud.BontechEvaluationProject.service.dto.*;
+import ir.sadeqcloud.BontechEvaluationProject.service.limitation.ClientLimitationServiceContract;
 import ir.sadeqcloud.BontechEvaluationProject.service.serviceAvailability.CommercialServiceAvailabilityContract;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -21,15 +23,18 @@ public class ClientAbstractionLayerOverService implements ClientAbstractionLayer
     private final CommercialServiceRepository commercialServiceRepository;
     private final CommercialServiceAvailabilityContract commercialServiceAvailabilityContract;
     private final ApplicationEventPublisher applicationEventPublisher;
+    private final ClientLimitationServiceContract clientLimitationServiceContract;
     @Autowired
     public ClientAbstractionLayerOverService(ClientServiceContract clientServiceContract
                                              ,CommercialServiceRepository commercialServiceRepository
                                              ,CommercialServiceAvailabilityContract commercialServiceAvailabilityContract
-                                             ,ApplicationEventPublisher applicationEventPublisher) {
+                                             ,ApplicationEventPublisher applicationEventPublisher
+                                             ,ClientLimitationServiceContract clientLimitationServiceContract) {
         this.clientServiceContract = clientServiceContract;
         this.commercialServiceRepository = commercialServiceRepository;
         this.commercialServiceAvailabilityContract = commercialServiceAvailabilityContract;
         this.applicationEventPublisher=applicationEventPublisher;
+        this.clientLimitationServiceContract=clientLimitationServiceContract;
     }
     @Transactional
     @Override
@@ -47,6 +52,10 @@ public class ClientAbstractionLayerOverService implements ClientAbstractionLayer
         CommercialServiceResultContract commercialServiceResultContract = createTransactionalEventAndPublishIt(commercialServiceName);
 
         CommercialService commercialService = commercialServiceOptional.get();
+        /**
+         * check if limit of commercial service not passed
+         */
+        checkCommercialServiceLimitationUsage(commercialService);
         /**
          * actual use of commercial service here
          * 1) check if simpleUSer has authority to use commercialService
@@ -69,6 +78,15 @@ public class ClientAbstractionLayerOverService implements ClientAbstractionLayer
      */
     private void publishTransactionalEvent(CommercialServiceResultContract commercialServiceResultContract){
         applicationEventPublisher.publishEvent(commercialServiceResultContract);
+    }
+
+    private void checkCommercialServiceLimitationUsage(CommercialService commercialService){
+        /**
+         * check if limit of commercial service not passed
+         */
+        boolean clientLimitationPassed = clientLimitationServiceContract.isClientLimitationPassed(commercialService);
+        if (clientLimitationPassed)
+            throw new ClientLimitPassedException(commercialService.getCommercialServiceName(),commercialService.getUsageLimitation());
     }
 
 }

@@ -1,6 +1,9 @@
 package ir.sadeqcloud.BontechEvaluationProject.centralExceptionHandler;
 
+import ir.sadeqcloud.BontechEvaluationProject.centralExceptionHandler.dto.ClientLimitationPassedResponseDto;
+import ir.sadeqcloud.BontechEvaluationProject.centralExceptionHandler.dto.SimpleUSerExceptionResponseDto;
 import ir.sadeqcloud.BontechEvaluationProject.custException.AdminTransactionRolledBackException;
+import ir.sadeqcloud.BontechEvaluationProject.custException.ClientLimitPassedException;
 import ir.sadeqcloud.BontechEvaluationProject.custException.ServiceNotAvailableAtTheMoment;
 import ir.sadeqcloud.BontechEvaluationProject.service.dto.OperationResult;
 import org.springframework.http.HttpStatus;
@@ -12,13 +15,18 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestControllerAdvice
 public class CentralExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ServiceNotAvailableAtTheMoment.class)
-    public ResponseEntity<SimpleUSerExceptionResponse> serviceNotAvailableHandler(ServiceNotAvailableAtTheMoment serviceNotAvailableAtTheMoment){
-        SimpleUSerExceptionResponse simpleUSerExceptionResponse = new SimpleUSerExceptionResponse(serviceNotAvailableAtTheMoment.getCommercialServiceName(), "service not available at the moment!");
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(simpleUSerExceptionResponse);
+    public ResponseEntity<SimpleUSerExceptionResponseDto> serviceNotAvailableHandler(ServiceNotAvailableAtTheMoment serviceNotAvailableAtTheMoment){
+        SimpleUSerExceptionResponseDto simpleUSerExceptionResponseDto = new SimpleUSerExceptionResponseDto(serviceNotAvailableAtTheMoment.getCommercialServiceName(), "service not available at the moment!");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(simpleUSerExceptionResponseDto);
     }
     @ExceptionHandler(AdminTransactionRolledBackException.class)
     public ResponseEntity<OperationResult> adminTransactionRollback(AdminTransactionRolledBackException adminTransactionRolledBackException){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(adminTransactionRolledBackException.getOperationResult());
+    }
+    @ExceptionHandler(ClientLimitPassedException.class)
+    public ResponseEntity<ClientLimitationPassedResponseDto> clientPassedServiceLimitation(ClientLimitPassedException clientLimitPassedException){
+        ClientLimitationPassedResponseDto clientLimitationPassedResponseDto = new ClientLimitationPassedResponseDto(clientLimitPassedException.getCommercialServiceName(), clientLimitPassedException.getLimitationUsage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(clientLimitationPassedResponseDto);
     }
 
 }

@@ -1,10 +1,10 @@
-package ir.sadeqcloud.BontechEvaluationProject.centralExceptionHandler;
+package ir.sadeqcloud.BontechEvaluationProject.centralExceptionHandler.dto;
 
-public class SimpleUSerExceptionResponse {
+public class SimpleUSerExceptionResponseDto {
     private String commercialServiceName;
     private String message;
 
-    public SimpleUSerExceptionResponse(String commercialServiceName, String message) {
+    public SimpleUSerExceptionResponseDto(String commercialServiceName, String message) {
         this.commercialServiceName = commercialServiceName;
         this.message = message;
     }
