@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "endpoint_availability")
+@Table(name = "service_availability")
 public class CommercialServiceAvailability {
 
     @EmbeddedId
@@ -18,6 +18,7 @@ public class CommercialServiceAvailability {
     private LocalTime endOfAvailability;
 
     @OneToOne(fetch = FetchType.LAZY,orphanRemoval = true)
+    @JoinColumn(name = "commercial_service_name")
     @MapsId("commercialServiceName")
     private CommercialService commercialService;//enforce ForeignKey constraint
 
