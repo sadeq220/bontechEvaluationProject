@@ -1,6 +1,7 @@
 package ir.sadeqcloud.BontechEvaluationProject.model.commercialService;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
@@ -19,9 +20,18 @@ public class CommercialServiceAvailability {
 
     @OneToOne(fetch = FetchType.LAZY,orphanRemoval = true)
     @JoinColumn(name = "commercial_service_name")
-    @MapsId("commercialServiceName")
+    @MapsId("commercialServiceName")//maps to commercialServiceName in commercialServiceAvailabilityKey
     private CommercialService commercialService;//enforce ForeignKey constraint
 
+    public CommercialServiceAvailability(){
+        //empty constructor to comply with POJO
+    }
+    public CommercialServiceAvailability(CommercialService commercialService, LocalDate date,LocalTime startOfAvailability,LocalTime endOfAvailability){
+        this.commercialService=commercialService;
+        this.commercialServiceAvailabilityKey=new CommercialServiceAvailabilityKey(commercialService.getCommercialServiceName(),date);
+        this.startOfAvailability=startOfAvailability;
+        this.endOfAvailability=endOfAvailability;
+    }
     public LocalTime getStartOfAvailability() {
         return startOfAvailability;
     }

@@ -14,8 +14,13 @@ public class CommercialServiceResult implements CommercialServiceResultContract{
     }
 
     @Override
-    public boolean isSuccessful() {
+    public boolean getIsSuccessful() {
         return isSuccessful;
+    }
+
+    @Override
+    public void setIsSuccessful(boolean isSuccessful) {
+    this.isSuccessful=isSuccessful;
     }
 
     @Override
