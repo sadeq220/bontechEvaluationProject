@@ -1,17 +1,16 @@
 package ir.sadeqcloud.BontechEvaluationProject.controller;
 
 import ir.sadeqcloud.BontechEvaluationProject.controller.dto.CommercialServiceDto;
+import ir.sadeqcloud.BontechEvaluationProject.controller.dto.PrivilegeDto;
 import ir.sadeqcloud.BontechEvaluationProject.controller.dto.ServiceAvailabilityDto;
 import ir.sadeqcloud.BontechEvaluationProject.controller.dto.SimpleUserDto;
 import ir.sadeqcloud.BontechEvaluationProject.service.adminService.AdminServiceContract;
 import ir.sadeqcloud.BontechEvaluationProject.service.dto.OperationResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.Filter;
 
@@ -44,6 +43,11 @@ public class AdminApis {
     public ResponseEntity<OperationResult> createCommercialService(@RequestBody CommercialServiceDto commercialServiceDto){
         OperationResult serviceAvailabilityCreated = adminServiceContract.createCommercialService(commercialServiceDto);
         return ResponseEntity.ok(serviceAvailabilityCreated);
+    }
+    @PutMapping("/add/privilege")
+    public ResponseEntity<OperationResult> addPrivilegeToUser(@RequestBody PrivilegeDto privilegeDto){
+        OperationResult operationResult = adminServiceContract.addPrivilege(privilegeDto);
+        return ResponseEntity.ok(operationResult);
     }
 
 }

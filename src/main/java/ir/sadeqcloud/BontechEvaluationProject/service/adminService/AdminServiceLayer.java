@@ -1,12 +1,15 @@
 package ir.sadeqcloud.BontechEvaluationProject.service.adminService;
 
 import ir.sadeqcloud.BontechEvaluationProject.controller.dto.CommercialServiceDto;
+import ir.sadeqcloud.BontechEvaluationProject.controller.dto.PrivilegeDto;
 import ir.sadeqcloud.BontechEvaluationProject.controller.dto.ServiceAvailabilityDto;
 import ir.sadeqcloud.BontechEvaluationProject.controller.dto.SimpleUserDto;
 import ir.sadeqcloud.BontechEvaluationProject.custException.CommercialServiceNotReachableException;
 import ir.sadeqcloud.BontechEvaluationProject.model.commercialService.CommercialService;
 import ir.sadeqcloud.BontechEvaluationProject.model.commercialService.CommercialServiceAvailability;
+import ir.sadeqcloud.BontechEvaluationProject.model.userModel.Admin;
 import ir.sadeqcloud.BontechEvaluationProject.model.userModel.Simple;
+import ir.sadeqcloud.BontechEvaluationProject.model.userModel.User;
 import ir.sadeqcloud.BontechEvaluationProject.repository.commercialServiceRepository.CommercialServiceAvailabilityRepository;
 import ir.sadeqcloud.BontechEvaluationProject.repository.commercialServiceRepository.CommercialServiceRepository;
 import ir.sadeqcloud.BontechEvaluationProject.repository.userRepository.UserRepository;
@@ -68,6 +71,22 @@ public class AdminServiceLayer implements AdminServiceContract {
         OperationResult operationResult = createTransactionalEventAndPublishIt("commercial service creation", "commercial service created!");
         CommercialService commercialService = commercialServiceDto.createEntity();
         commercialServiceRepository.save(commercialService);
+        return operationResult;
+    }
+    @Transactional
+    @Override
+    public OperationResult addPrivilege(PrivilegeDto privilegeDto) {
+        OperationResult operationResult = createTransactionalEventAndPublishIt("add privilege to simpleUser", "privilege added!");
+        Optional<User> optionalUser = userRepository.findById(privilegeDto.getUsername());
+        optionalUser.orElseThrow(()->new RuntimeException(privilegeDto.getUsername()+" not exists!"));//it will be translated
+        User user = optionalUser.get();
+        if (!(user instanceof Simple))
+            throw new RuntimeException(privilegeDto.getUsername()+" is not a simple user!");// it will be translated
+        Optional<CommercialService> optionalCommercialService = commercialServiceRepository.findById(privilegeDto.getCommercialServiceName());
+        optionalCommercialService.orElseThrow(()->new CommercialServiceNotReachableException(privilegeDto.getCommercialServiceName()));
+
+        ((Simple) user).addAllowableService(optionalCommercialService.get() );
+        userRepository.flush();//force update user in database transaction
         return operationResult;
     }
 

@@ -28,7 +28,7 @@ public class ClientServiceLayer implements ClientServiceContract{
         this.userRepository = userRepository;
         this.applicationEventPublisher = applicationEventPublisher;
     }
-    @PreAuthorize("hasAuthority(commercialService.commercialServiceName)")
+    @PreAuthorize("hasAuthority(#commercialService.commercialServiceName)")
     @Transactional(propagation = Propagation.MANDATORY)// enforce existence of AbstractionLayer
     @Override
     public void useCommercialService(CommercialService commercialService, CommercialServiceRequiredInput commercialServicePerformInput) {
