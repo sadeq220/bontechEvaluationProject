@@ -1,5 +1,7 @@
 package ir.sadeqcloud.BontechEvaluationProject.controller.dto;
 
+import ir.sadeqcloud.BontechEvaluationProject.model.commercialService.CommercialServiceAvailability;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -39,5 +41,13 @@ public class ServiceAvailabilityDto {
 
     public void setEndOfAvailability(LocalTime endOfAvailability) {
         this.endOfAvailability = endOfAvailability;
+    }
+    public static ServiceAvailabilityDto factory(CommercialServiceAvailability commercialServiceAvailability){
+        ServiceAvailabilityDto serviceAvailabilityDto = new ServiceAvailabilityDto();
+        serviceAvailabilityDto.date=commercialServiceAvailability.getCommercialServiceAvailabilityKey().getDate();
+        serviceAvailabilityDto.commercialServiceName=commercialServiceAvailability.getCommercialServiceAvailabilityKey().getCommercialServiceName();
+        serviceAvailabilityDto.startOfAvailability=commercialServiceAvailability.getStartOfAvailability();
+        serviceAvailabilityDto.endOfAvailability=commercialServiceAvailability.getEndOfAvailability();
+        return serviceAvailabilityDto;
     }
 }

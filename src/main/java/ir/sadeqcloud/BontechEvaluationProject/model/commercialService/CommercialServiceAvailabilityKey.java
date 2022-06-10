@@ -41,4 +41,12 @@ public class CommercialServiceAvailabilityKey implements Serializable {
         hashCodeBuilder.append(date);
         return hashCodeBuilder.toHashCode();
     }
+
+    public String getCommercialServiceName() {
+        return commercialServiceName;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
 }

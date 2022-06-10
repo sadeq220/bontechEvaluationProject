@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-@Entity
+@Entity(name="service_availability")
 @Table(name = "service_availability")
 public class CommercialServiceAvailability {
 
@@ -46,5 +46,9 @@ public class CommercialServiceAvailability {
 
     public void setEndOfAvailability(LocalTime endOfAvailability) {
         this.endOfAvailability = endOfAvailability;
+    }
+
+    public CommercialServiceAvailabilityKey getCommercialServiceAvailabilityKey() {
+        return commercialServiceAvailabilityKey;
     }
 }
