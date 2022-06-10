@@ -1,5 +1,6 @@
 package ir.sadeqcloud.BontechEvaluationProject.controller;
 
+import ir.sadeqcloud.BontechEvaluationProject.controller.dto.CommercialServiceDto;
 import ir.sadeqcloud.BontechEvaluationProject.controller.dto.PageDto;
 import ir.sadeqcloud.BontechEvaluationProject.controller.dto.ServiceAvailabilityDto;
 import ir.sadeqcloud.BontechEvaluationProject.model.commercialService.CommercialServiceAvailability;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/CLIENT")
@@ -42,5 +44,10 @@ public class SimpleUserApis {
     public ResponseEntity<List<CommercialServiceUsage>> reportCommercialServiceUsage(@RequestParam(defaultValue = "true")boolean success,@ModelAttribute PageDto pageDto){
         Page<CommercialServiceUsage> commercialServiceUsages = clientReportServiceContract.reportServiceUsage(success, pageDto);
         return ResponseEntity.ok(commercialServiceUsages.toList());
+    }
+    @GetMapping("/report/allowable/service")
+    public ResponseEntity<Set<CommercialServiceDto>> reportAllowableCommercialServices(){
+        Set<CommercialServiceDto> allowableServices = clientReportServiceContract.getAllowableServices();
+        return ResponseEntity.ok(allowableServices);
     }
 }

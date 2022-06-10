@@ -35,4 +35,11 @@ public class CommercialServiceDto {
     public CommercialService createEntity(){
         return new CommercialService(commercialServiceName, cost, usageLimitation);
     }
+    public static CommercialServiceDto factory(CommercialService commercialService){
+        CommercialServiceDto commercialServiceDto = new CommercialServiceDto();
+        commercialServiceDto.commercialServiceName=commercialService.getCommercialServiceName();
+        commercialServiceDto.cost=commercialService.getCost();
+        commercialServiceDto.usageLimitation=commercialService.getUsageLimitation();
+        return commercialServiceDto;
+    }
 }
