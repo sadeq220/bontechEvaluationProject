@@ -1,6 +1,7 @@
 package ir.sadeqcloud.BontechEvaluationProject.model.commercialService;
 
 import javax.persistence.*;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -14,7 +15,7 @@ public class CommercialServiceAvailability {
      * identify service availability in each day
      */
     private CommercialServiceAvailabilityKey commercialServiceAvailabilityKey;
-    //TODO custom constraint of 12 hours
+
     private LocalTime startOfAvailability;
     private LocalTime endOfAvailability;
 
@@ -50,5 +51,14 @@ public class CommercialServiceAvailability {
 
     public CommercialServiceAvailabilityKey getCommercialServiceAvailabilityKey() {
         return commercialServiceAvailabilityKey;
+    }
+    @PrePersist
+    private void checkTimeOverBusinessRule(){
+        if (endOfAvailability.isBefore(startOfAvailability)){
+            throw new RuntimeException("endOfAvailability time must be AFTER startOfAvailability");
+        }
+        if(endOfAvailability.minus(Duration.ofHours(12l)).isAfter(startOfAvailability)){
+            throw new RuntimeException("duration between startOfAvailability and endOfAvailability must be 12 hours at most");
+        }
     }
 }
