@@ -3,6 +3,7 @@ package ir.sadeqcloud.BontechEvaluationProject.controller;
 import ir.sadeqcloud.BontechEvaluationProject.controller.dto.PageDto;
 import ir.sadeqcloud.BontechEvaluationProject.controller.dto.ServiceAvailabilityDto;
 import ir.sadeqcloud.BontechEvaluationProject.model.commercialService.CommercialServiceAvailability;
+import ir.sadeqcloud.BontechEvaluationProject.model.report.CommercialServiceUsage;
 import ir.sadeqcloud.BontechEvaluationProject.service.clientAbstractionLayer.ClientAbstractionLayerOverServiceLayerContract;
 import ir.sadeqcloud.BontechEvaluationProject.service.clientService.ClientReportServiceContract;
 import ir.sadeqcloud.BontechEvaluationProject.service.dto.CommercialServiceResultContract;
@@ -36,5 +37,10 @@ public class SimpleUserApis {
         Page<CommercialServiceAvailability> availableServicesAtTheMoment = clientReportServiceContract.getAvailableServicesAtTheMoment(pageDto);
         List<ServiceAvailabilityDto> serviceAvailabilityDtos = availableServicesAtTheMoment.map(commercialServiceAvailability -> ServiceAvailabilityDto.factory(commercialServiceAvailability)).toList();
         return ResponseEntity.ok(serviceAvailabilityDtos);
+    }
+    @GetMapping("/report/use/service")
+    public ResponseEntity<List<CommercialServiceUsage>> reportCommercialServiceUsage(@RequestParam(defaultValue = "true")boolean success,@ModelAttribute PageDto pageDto){
+        Page<CommercialServiceUsage> commercialServiceUsages = clientReportServiceContract.reportServiceUsage(success, pageDto);
+        return ResponseEntity.ok(commercialServiceUsages.toList());
     }
 }
