@@ -11,9 +11,12 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Repository
 public interface CommercialServiceAvailabilityRepository extends JpaRepository<CommercialServiceAvailability, CommercialServiceAvailabilityKey> {
     @Query("SELECT sa FROM service_availability sa WHERE sa.startOfAvailability <= :moment AND sa.endOfAvailability >= :moment AND sa.commercialServiceAvailabilityKey.date = :date")
     Page<CommercialServiceAvailability> getAvailableServicesAtTheMoment(@Param("moment") LocalTime moment, @Param("date")LocalDate date,Pageable pageable);
+
+    List<CommercialServiceAvailability> findCommercialServiceAvailabilitiesByCommercialServiceAvailabilityKey_CommercialServiceName(String commercialServiceName);
 }

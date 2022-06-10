@@ -58,6 +58,11 @@ public class AdminApis {
         OperationResult operationResult = adminServiceContract.removePrivilege(privilegeDto);
         return ResponseEntity.ok(operationResult);
     }
+    @DeleteMapping("/remove/service/{serviceName}")
+    public ResponseEntity<OperationResult> removeCommercialService(@PathVariable(name = "serviceName")String commercialServiceName){
+        OperationResult operationResult = adminServiceContract.removeCommercialService(commercialServiceName);
+        return ResponseEntity.ok(operationResult);
+    }
 
     @PageableAsQueryParam
     @GetMapping("/report/service")

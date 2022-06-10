@@ -24,10 +24,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @PreAuthorize("hasRole('ADMIN')")
+@Transactional
 public class AdminServiceLayer implements AdminServiceContract {
     private final UserRepository userRepository;
     private final CommercialServiceAvailabilityRepository commercialServiceAvailabilityRepository;
@@ -49,7 +51,6 @@ public class AdminServiceLayer implements AdminServiceContract {
     }
 
     @Override
-    @Transactional
     public OperationResult createUser(SimpleUserDto simpleUserDto) {
         OperationResult operationResult = createTransactionalEventAndPublishIt("simpleUserCreation", "user created!");//TODO write by ResourceBundle
         Simple actualEntity = simpleUserDto.getActualEntity();
@@ -57,7 +58,6 @@ public class AdminServiceLayer implements AdminServiceContract {
         return operationResult;
     }
 
-    @Transactional
     @Override
     public OperationResult createServiceAvailability(ServiceAvailabilityDto serviceAvailabilityDto) {
         OperationResult operationResult = createTransactionalEventAndPublishIt("service availability creation", "service availability created!");
@@ -72,7 +72,6 @@ public class AdminServiceLayer implements AdminServiceContract {
         return operationResult;
     }
 
-    @Transactional
     @Override
     public OperationResult createCommercialService(CommercialServiceDto commercialServiceDto) {
         OperationResult operationResult = createTransactionalEventAndPublishIt("commercial service creation", "commercial service created!");
@@ -80,7 +79,7 @@ public class AdminServiceLayer implements AdminServiceContract {
         commercialServiceRepository.save(commercialService);
         return operationResult;
     }
-    @Transactional
+
     @Override
     public OperationResult addPrivilege(PrivilegeDto privilegeDto) {
         OperationResult operationResult = createTransactionalEventAndPublishIt("add privilege to simpleUser", "privilege added!");
@@ -105,6 +104,17 @@ public class AdminServiceLayer implements AdminServiceContract {
         userRepository.flush();
         return operationResult;
     }
+
+    @Override
+    public OperationResult removeCommercialService(String commercialServiceName) {
+        OperationResult operationResult = createTransactionalEventAndPublishIt("remove commercial service", "commercialService removed!");
+        CommercialService commercialService = findCommercialService(commercialServiceName);
+        List<CommercialServiceAvailability> serviceAvailabilityList = commercialServiceAvailabilityRepository.findCommercialServiceAvailabilitiesByCommercialServiceAvailabilityKey_CommercialServiceName(commercialServiceName);
+        commercialServiceAvailabilityRepository.deleteAll(serviceAvailabilityList);
+        commercialServiceRepository.delete(commercialService);
+        return operationResult;
+    }
+
     @Transactional(readOnly = true)
     @Override
     public Page<CommercialServiceUsage> reportServiceUsage(boolean success, PageDto pageDto) {
