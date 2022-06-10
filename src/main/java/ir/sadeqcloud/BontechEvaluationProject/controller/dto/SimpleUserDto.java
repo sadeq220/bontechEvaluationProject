@@ -2,6 +2,8 @@ package ir.sadeqcloud.BontechEvaluationProject.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import ir.sadeqcloud.BontechEvaluationProject.model.userModel.Simple;
+import ir.sadeqcloud.BontechEvaluationProject.utils.IoCContainerUtil;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.math.BigDecimal;
 
@@ -23,7 +25,8 @@ public class SimpleUserDto {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        PasswordEncoder passwordEncoder = IoCContainerUtil.getBean(PasswordEncoder.class);
+        this.password = passwordEncoder.encode(password);
     }
 
     public BigDecimal getInitialCredit() {
