@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @PreAuthorize("hasRole('ADMIN')")
@@ -141,6 +142,16 @@ public class AdminServiceLayer implements AdminServiceContract {
             return this.reportServiceUsage(success,pageDto);
         Pageable pageable = PageRequest.of(pageDto.getPage(), pageDto.getSize());
         return commercialServiceUsageRepository.getAllByUsernameAndWasSuccessful(username, success,pageable);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Page<SimpleUserDetailedDto> reportSimpleUsersDetails(Pageable pageable) {
+        return userRepository.getAllSimpleUsers(pageable).map(simple ->
+                new SimpleUserDetailedDto(
+                 simple.getUsername()
+                ,simple.getCredit()
+                ,simple.grantedAuthorities().stream().map(grantedAuthority -> grantedAuthority.getAuthority()).collect(Collectors.toSet())) );
     }
 
     private OperationResult createTransactionalEventAndPublishIt(String operationName,String message){

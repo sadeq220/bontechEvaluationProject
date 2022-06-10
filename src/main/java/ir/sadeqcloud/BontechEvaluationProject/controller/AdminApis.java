@@ -10,6 +10,7 @@ import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -67,6 +68,12 @@ public class AdminApis {
     public ResponseEntity<OperationResult> addCreditToUsername(@RequestBody CreditDto creditDto){
         OperationResult operationResult = adminServiceContract.addCredit(creditDto);
         return ResponseEntity.ok(operationResult);
+    }
+    @PageableAsQueryParam
+    @GetMapping("/report/simple/users")
+    public ResponseEntity<List<SimpleUserDetailedDto>> reportListOfSimpleUsers(Pageable pageable){
+        Page<SimpleUserDetailedDto> simpleUserDetailedDtos = adminServiceContract.reportSimpleUsersDetails(pageable);
+        return ResponseEntity.ok(simpleUserDetailedDtos.toList());
     }
 
     @PageableAsQueryParam

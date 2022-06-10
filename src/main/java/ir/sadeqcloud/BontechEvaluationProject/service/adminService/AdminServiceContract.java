@@ -4,6 +4,7 @@ import ir.sadeqcloud.BontechEvaluationProject.controller.dto.*;
 import ir.sadeqcloud.BontechEvaluationProject.model.report.CommercialServiceUsage;
 import ir.sadeqcloud.BontechEvaluationProject.service.dto.OperationResult;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 
 public interface AdminServiceContract {
@@ -16,4 +17,5 @@ public interface AdminServiceContract {
     OperationResult addCredit(CreditDto creditDto);
     Page<CommercialServiceUsage> reportServiceUsage(boolean success, PageDto pageDto);
     Page<CommercialServiceUsage> reportServiceUsage(boolean success, PageDto pageDto,String username);
+    Page<SimpleUserDetailedDto> reportSimpleUsersDetails(Pageable pageable);
 }
