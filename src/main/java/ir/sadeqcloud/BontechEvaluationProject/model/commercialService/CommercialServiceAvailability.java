@@ -18,7 +18,7 @@ public class CommercialServiceAvailability {
     private LocalTime startOfAvailability;
     private LocalTime endOfAvailability;
 
-    @OneToOne(fetch = FetchType.LAZY,orphanRemoval = true)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "commercial_service_name")
     @MapsId("commercialServiceName")//maps to commercialServiceName in commercialServiceAvailabilityKey
     private CommercialService commercialService;//enforce ForeignKey constraint

@@ -4,6 +4,7 @@ import ir.sadeqcloud.BontechEvaluationProject.controller.dto.*;
 import ir.sadeqcloud.BontechEvaluationProject.custException.CommercialServiceNotReachableException;
 import ir.sadeqcloud.BontechEvaluationProject.model.commercialService.CommercialService;
 import ir.sadeqcloud.BontechEvaluationProject.model.commercialService.CommercialServiceAvailability;
+import ir.sadeqcloud.BontechEvaluationProject.model.commercialService.CommercialServiceAvailabilityKey;
 import ir.sadeqcloud.BontechEvaluationProject.model.report.CommercialServiceUsage;
 import ir.sadeqcloud.BontechEvaluationProject.model.userModel.Simple;
 import ir.sadeqcloud.BontechEvaluationProject.model.userModel.User;
@@ -61,6 +62,11 @@ public class AdminServiceLayer implements AdminServiceContract {
     public OperationResult createServiceAvailability(ServiceAvailabilityDto serviceAvailabilityDto) {
         OperationResult operationResult = createTransactionalEventAndPublishIt("service availability creation", "service availability created!");
         CommercialService commercialService=findCommercialService(serviceAvailabilityDto.getCommercialServiceName());
+
+        CommercialServiceAvailabilityKey commercialServiceAvailabilityKey = new CommercialServiceAvailabilityKey(serviceAvailabilityDto.getCommercialServiceName(), serviceAvailabilityDto.getDate());
+        if (commercialServiceAvailabilityRepository.existsById(commercialServiceAvailabilityKey)) {
+            throw new RuntimeException("there is an already availability ");
+        }
         CommercialServiceAvailability commercialServiceAvailability = new CommercialServiceAvailability(commercialService, serviceAvailabilityDto.getDate(), serviceAvailabilityDto.getStartOfAvailability(), serviceAvailabilityDto.getEndOfAvailability());
         commercialServiceAvailabilityRepository.save(commercialServiceAvailability);
         return operationResult;
