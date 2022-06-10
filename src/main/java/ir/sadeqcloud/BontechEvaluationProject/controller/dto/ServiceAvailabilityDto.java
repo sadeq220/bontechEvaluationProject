@@ -1,5 +1,6 @@
 package ir.sadeqcloud.BontechEvaluationProject.controller.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import ir.sadeqcloud.BontechEvaluationProject.model.commercialService.CommercialServiceAvailability;
 
 import java.time.LocalDate;
@@ -8,7 +9,9 @@ import java.time.LocalTime;
 public class ServiceAvailabilityDto {
     private String commercialServiceName;
     private LocalDate date;
+    @Schema(implementation = String.class,example = "HH:mm")
     private LocalTime startOfAvailability;
+    @Schema(implementation = String.class,example = "HH:mm")
     private LocalTime endOfAvailability;
 
     public String getCommercialServiceName() {
