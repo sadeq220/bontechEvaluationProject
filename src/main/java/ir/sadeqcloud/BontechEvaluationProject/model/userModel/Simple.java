@@ -53,6 +53,10 @@ public class Simple extends User{
         this.credit=this.credit.subtract(cost);
         return this.credit;
     }
+    public BigDecimal addCredit(BigDecimal credit){
+        this.credit=this.credit.add(credit);
+        return this.credit;
+    }
 
     /**
      * use hibernate callback method

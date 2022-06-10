@@ -115,6 +115,18 @@ public class AdminServiceLayer implements AdminServiceContract {
         return operationResult;
     }
 
+    @Override
+    public OperationResult addCredit(CreditDto creditDto) {
+        OperationResult operationResult = createTransactionalEventAndPublishIt("add credit to simple user", "credit added!");
+        User user = findUser(creditDto.getUsername());
+        if (!(user instanceof Simple)){
+            throw new RuntimeException("this username is not simple user!");//it will be translated
+        }
+        ((Simple) user).addCredit(creditDto.getCredit());
+        userRepository.flush();
+        return operationResult;
+    }
+
     @Transactional(readOnly = true)
     @Override
     public Page<CommercialServiceUsage> reportServiceUsage(boolean success, PageDto pageDto) {

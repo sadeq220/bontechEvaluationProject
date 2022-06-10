@@ -63,6 +63,11 @@ public class AdminApis {
         OperationResult operationResult = adminServiceContract.removeCommercialService(commercialServiceName);
         return ResponseEntity.ok(operationResult);
     }
+    @PutMapping("/add/credit")
+    public ResponseEntity<OperationResult> addCreditToUsername(@RequestBody CreditDto creditDto){
+        OperationResult operationResult = adminServiceContract.addCredit(creditDto);
+        return ResponseEntity.ok(operationResult);
+    }
 
     @PageableAsQueryParam
     @GetMapping("/report/service")
