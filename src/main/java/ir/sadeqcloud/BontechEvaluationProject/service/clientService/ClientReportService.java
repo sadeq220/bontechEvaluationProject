@@ -46,13 +46,13 @@ public class ClientReportService implements ClientReportServiceContract{
     @Override
     public Page<CommercialServiceUsage> reportServiceUsage(boolean success, PageDto pageDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Pageable pageable = PageRequest.of(pageDto.getNo(), pageDto.getSize());
+        Pageable pageable = PageRequest.of(pageDto.getPage(), pageDto.getSize());
         return commercialServiceUsageRepository.getAllByUsernameAndWasSuccessful(authentication.getName(), success, pageable);
     }
     @Transactional(readOnly = true)
     @Override
     public Page<CommercialServiceAvailability> getAvailableServicesAtTheMoment(PageDto pageDto) {
-        Pageable pageable = PageRequest.of(pageDto.getNo(), pageDto.getSize());
+        Pageable pageable = PageRequest.of(pageDto.getPage(), pageDto.getSize());
         return commercialServiceAvailabilityRepository.getAvailableServicesAtTheMoment(LocalTime.now(), LocalDate.now(), pageable);
     }
     @Transactional(readOnly = true)

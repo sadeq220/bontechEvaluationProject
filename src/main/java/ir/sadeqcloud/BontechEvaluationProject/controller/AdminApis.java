@@ -1,9 +1,12 @@
 package ir.sadeqcloud.BontechEvaluationProject.controller;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import ir.sadeqcloud.BontechEvaluationProject.controller.dto.*;
 import ir.sadeqcloud.BontechEvaluationProject.model.report.CommercialServiceUsage;
 import ir.sadeqcloud.BontechEvaluationProject.service.adminService.AdminServiceContract;
 import ir.sadeqcloud.BontechEvaluationProject.service.dto.OperationResult;
+import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -16,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ADMIN")
+@SecurityRequirement(name = "admin")
 public class AdminApis {
 
     private final AdminServiceContract adminServiceContract;
@@ -54,9 +58,11 @@ public class AdminApis {
         OperationResult operationResult = adminServiceContract.removePrivilege(privilegeDto);
         return ResponseEntity.ok(operationResult);
     }
+
+    @PageableAsQueryParam
     @GetMapping("/report/service")
     public ResponseEntity<List<CommercialServiceUsage>> getReportOfServiceUsage(@RequestParam(defaultValue = "true")boolean success
-                                                                               , @ModelAttribute PageDto pageDto
+                                                                               , @Parameter(hidden = true) @ModelAttribute PageDto pageDto
                                                                                , @RequestParam(required = false)String username){
         Page<CommercialServiceUsage> commercialServiceUsages = adminServiceContract.reportServiceUsage(success, pageDto,username);
         return ResponseEntity.ok(commercialServiceUsages.toList());

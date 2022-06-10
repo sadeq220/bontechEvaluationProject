@@ -5,7 +5,6 @@ import ir.sadeqcloud.BontechEvaluationProject.custException.CommercialServiceNot
 import ir.sadeqcloud.BontechEvaluationProject.model.commercialService.CommercialService;
 import ir.sadeqcloud.BontechEvaluationProject.model.commercialService.CommercialServiceAvailability;
 import ir.sadeqcloud.BontechEvaluationProject.model.report.CommercialServiceUsage;
-import ir.sadeqcloud.BontechEvaluationProject.model.userModel.Admin;
 import ir.sadeqcloud.BontechEvaluationProject.model.userModel.Simple;
 import ir.sadeqcloud.BontechEvaluationProject.model.userModel.User;
 import ir.sadeqcloud.BontechEvaluationProject.repository.commercialServiceRepository.CommercialServiceAvailabilityRepository;
@@ -103,7 +102,7 @@ public class AdminServiceLayer implements AdminServiceContract {
     @Transactional(readOnly = true)
     @Override
     public Page<CommercialServiceUsage> reportServiceUsage(boolean success, PageDto pageDto) {
-        Pageable pageable = PageRequest.of(pageDto.getNo(), pageDto.getSize());
+        Pageable pageable = PageRequest.of(pageDto.getPage(), pageDto.getSize());
         return commercialServiceUsageRepository.getPageableResult(success,pageable);
     }
 
@@ -112,7 +111,7 @@ public class AdminServiceLayer implements AdminServiceContract {
     public Page<CommercialServiceUsage> reportServiceUsage(boolean success, PageDto pageDto, String username) {
         if (username==null)
             return this.reportServiceUsage(success,pageDto);
-        Pageable pageable = PageRequest.of(pageDto.getNo(), pageDto.getSize());
+        Pageable pageable = PageRequest.of(pageDto.getPage(), pageDto.getSize());
         return commercialServiceUsageRepository.getAllByUsernameAndWasSuccessful(username, success,pageable);
     }
 

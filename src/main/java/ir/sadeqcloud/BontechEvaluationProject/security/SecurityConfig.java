@@ -28,10 +28,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
          httpSecurity.authorizeRequests()
-                 .antMatchers("/login").permitAll()
+                 .antMatchers("/swagger-ui/**").permitAll()
+                 .antMatchers("/swagger-ui.html/**").permitAll()
+                 .antMatchers("/v3/api-docs/**").permitAll()
                  .antMatchers("/ADMIN/**").hasRole("ADMIN")
                  .anyRequest().authenticated();
-         httpSecurity.formLogin();
+         httpSecurity.httpBasic();
          httpSecurity.csrf().disable();
         return httpSecurity.build();
     }
