@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 
 @Entity(name="service_availability")
 @Table(name = "service_availability")
@@ -57,7 +58,7 @@ public class CommercialServiceAvailability {
         if (endOfAvailability.isBefore(startOfAvailability)){
             throw new RuntimeException("endOfAvailability time must be AFTER startOfAvailability");
         }
-        if(endOfAvailability.minus(Duration.ofHours(12l)).isAfter(startOfAvailability)){
+        if(ChronoUnit.MINUTES.between(startOfAvailability,endOfAvailability)>12*60){
             throw new RuntimeException("duration between startOfAvailability and endOfAvailability must be 12 hours at most");
         }
     }
