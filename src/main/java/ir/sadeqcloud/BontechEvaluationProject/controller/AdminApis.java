@@ -70,10 +70,16 @@ public class AdminApis {
         return ResponseEntity.ok(operationResult);
     }
     @PageableAsQueryParam
-    @GetMapping("/report/simple/users")
-    public ResponseEntity<List<SimpleUserDetailedDto>> reportListOfSimpleUsers(Pageable pageable){
+    @GetMapping("/report/list/simple/users")
+    public ResponseEntity<List<SimpleUserDetailedDto>> reportListOfSimpleUsers(@Parameter(hidden = true) Pageable pageable){
         Page<SimpleUserDetailedDto> simpleUserDetailedDtos = adminServiceContract.reportSimpleUsersDetails(pageable);
         return ResponseEntity.ok(simpleUserDetailedDtos.toList());
+    }
+    @PageableAsQueryParam
+    @GetMapping("/report/list/service")
+    public ResponseEntity<List<CommercialServiceDto>> reportListOfCommercialServices(@Parameter(hidden = true) Pageable pageable){
+        Page<CommercialServiceDto> commercialServiceDtos = adminServiceContract.reportListOfCommercialServices(pageable);
+        return ResponseEntity.ok(commercialServiceDtos.toList());
     }
 
     @PageableAsQueryParam

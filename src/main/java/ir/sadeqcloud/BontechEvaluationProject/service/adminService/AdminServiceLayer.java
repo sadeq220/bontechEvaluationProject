@@ -154,6 +154,11 @@ public class AdminServiceLayer implements AdminServiceContract {
                 ,simple.grantedAuthorities().stream().map(grantedAuthority -> grantedAuthority.getAuthority()).collect(Collectors.toSet())) );
     }
 
+    @Override
+    public Page<CommercialServiceDto> reportListOfCommercialServices(Pageable pageable) {
+        return commercialServiceRepository.findAll(pageable).map(commercialService -> CommercialServiceDto.factory(commercialService));
+    }
+
     private OperationResult createTransactionalEventAndPublishIt(String operationName,String message){
         ServiceOperationResult serviceOperationResult = new ServiceOperationResult(true, message, operationName);
         publishTransactionalEvent(serviceOperationResult);

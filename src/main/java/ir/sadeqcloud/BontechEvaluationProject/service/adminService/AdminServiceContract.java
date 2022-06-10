@@ -18,4 +18,5 @@ public interface AdminServiceContract {
     Page<CommercialServiceUsage> reportServiceUsage(boolean success, PageDto pageDto);
     Page<CommercialServiceUsage> reportServiceUsage(boolean success, PageDto pageDto,String username);
     Page<SimpleUserDetailedDto> reportSimpleUsersDetails(Pageable pageable);
+    Page<CommercialServiceDto> reportListOfCommercialServices(Pageable pageable);
 }
