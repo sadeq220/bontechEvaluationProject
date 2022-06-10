@@ -1,18 +1,18 @@
 package ir.sadeqcloud.BontechEvaluationProject.controller;
 
-import ir.sadeqcloud.BontechEvaluationProject.controller.dto.CommercialServiceDto;
-import ir.sadeqcloud.BontechEvaluationProject.controller.dto.PrivilegeDto;
-import ir.sadeqcloud.BontechEvaluationProject.controller.dto.ServiceAvailabilityDto;
-import ir.sadeqcloud.BontechEvaluationProject.controller.dto.SimpleUserDto;
+import ir.sadeqcloud.BontechEvaluationProject.controller.dto.*;
+import ir.sadeqcloud.BontechEvaluationProject.model.report.CommercialServiceUsage;
 import ir.sadeqcloud.BontechEvaluationProject.service.adminService.AdminServiceContract;
 import ir.sadeqcloud.BontechEvaluationProject.service.dto.OperationResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.Filter;
+import java.util.List;
 
 @RestController
 @RequestMapping("/ADMIN")
@@ -48,6 +48,18 @@ public class AdminApis {
     public ResponseEntity<OperationResult> addPrivilegeToUser(@RequestBody PrivilegeDto privilegeDto){
         OperationResult operationResult = adminServiceContract.addPrivilege(privilegeDto);
         return ResponseEntity.ok(operationResult);
+    }
+    @PutMapping("/remove/privilege")
+    public ResponseEntity<OperationResult> removePrivilegeFromUser(@RequestBody PrivilegeDto privilegeDto){
+        OperationResult operationResult = adminServiceContract.removePrivilege(privilegeDto);
+        return ResponseEntity.ok(operationResult);
+    }
+    @GetMapping("/report/service")
+    public ResponseEntity<List<CommercialServiceUsage>> getReportOfServiceUsage(@RequestParam(defaultValue = "true")boolean success
+                                                                               , @ModelAttribute PageDto pageDto
+                                                                               , @RequestParam(required = false)String username){
+        Page<CommercialServiceUsage> commercialServiceUsages = adminServiceContract.reportServiceUsage(success, pageDto,username);
+        return ResponseEntity.ok(commercialServiceUsages.toList());
     }
 
 }
