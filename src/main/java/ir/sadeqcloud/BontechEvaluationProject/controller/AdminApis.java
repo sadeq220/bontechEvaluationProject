@@ -81,6 +81,12 @@ public class AdminApis {
         Page<CommercialServiceDto> commercialServiceDtos = adminServiceContract.reportListOfCommercialServices(pageable);
         return ResponseEntity.ok(commercialServiceDtos.toList());
     }
+    @PageableAsQueryParam
+    @GetMapping("/report/list/availability")
+    public ResponseEntity<List<ServiceAvailabilityDto>> reportListOfServiceAvailabilities(@Parameter(hidden = true) Pageable pageable){
+        Page<ServiceAvailabilityDto> serviceAvailabilityDtos = adminServiceContract.reportListOfServiceAvailability(pageable);
+        return ResponseEntity.ok(serviceAvailabilityDtos.toList());
+    }
 
     @PageableAsQueryParam
     @GetMapping("/report/service")

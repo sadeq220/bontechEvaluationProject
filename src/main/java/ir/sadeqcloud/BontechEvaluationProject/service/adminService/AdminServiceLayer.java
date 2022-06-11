@@ -166,6 +166,12 @@ public class AdminServiceLayer implements AdminServiceContract {
     }
 
     @Override
+    public Page<ServiceAvailabilityDto> reportListOfServiceAvailability(Pageable pageable) {
+        Page<CommercialServiceAvailability> commercialServiceAvailabilities = commercialServiceAvailabilityRepository.findAll(pageable);
+        return commercialServiceAvailabilities.map(commercialServiceAvailability -> ServiceAvailabilityDto.factory(commercialServiceAvailability));
+    }
+
+    @Override
     public Page<CommercialServiceDto> reportListOfCommercialServices(Pageable pageable) {
         return commercialServiceRepository.findAll(pageable).map(commercialService -> CommercialServiceDto.factory(commercialService));
     }
