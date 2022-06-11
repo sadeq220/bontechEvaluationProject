@@ -90,5 +90,10 @@ public class AdminApis {
         Page<CommercialServiceUsage> commercialServiceUsages = adminServiceContract.reportServiceUsage(success, pageDto,username);
         return ResponseEntity.ok(commercialServiceUsages.toList());
     }
+    @DeleteMapping("/remove/user/{username}")
+    public ResponseEntity<OperationResult> deleteSimpleUser(@PathVariable("username") String username){
+        OperationResult operationResult = adminServiceContract.removeSimpleUser(username);
+        return ResponseEntity.ok(operationResult);
+    }
 
 }

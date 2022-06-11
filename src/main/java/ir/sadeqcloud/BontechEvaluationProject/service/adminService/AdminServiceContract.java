@@ -14,6 +14,7 @@ public interface AdminServiceContract {
     OperationResult addPrivilege(PrivilegeDto privilegeDto);
     OperationResult removePrivilege(PrivilegeDto privilegeDto);
     OperationResult removeCommercialService(String commercialServiceName);
+    OperationResult removeSimpleUser(String username);
     OperationResult addCredit(CreditDto creditDto);
     Page<CommercialServiceUsage> reportServiceUsage(boolean success, PageDto pageDto);
     Page<CommercialServiceUsage> reportServiceUsage(boolean success, PageDto pageDto,String username);

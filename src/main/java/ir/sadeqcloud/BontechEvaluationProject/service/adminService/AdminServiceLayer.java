@@ -117,6 +117,17 @@ public class AdminServiceLayer implements AdminServiceContract {
     }
 
     @Override
+    public OperationResult removeSimpleUser(String username) {
+        OperationResult operationResult = createTransactionalEventAndPublishIt("remove simple user", "simpleUser removed!");
+        User user = findUser(username);
+        if (!(user instanceof Simple)){
+            throw new RuntimeException("username is not a simple user");
+        }
+        userRepository.delete(user);
+        return operationResult;
+    }
+
+    @Override
     public OperationResult addCredit(CreditDto creditDto) {
         OperationResult operationResult = createTransactionalEventAndPublishIt("add credit to simple user", "credit added!");
         User user = findUser(creditDto.getUsername());

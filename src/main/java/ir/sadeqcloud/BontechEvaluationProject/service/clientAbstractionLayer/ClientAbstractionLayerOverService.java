@@ -39,6 +39,8 @@ public class ClientAbstractionLayerOverService implements ClientAbstractionLayer
     @Transactional
     @Override
     public CommercialServiceResultContract useCommercialService(String commercialServiceName, CommercialServiceRequiredInput commercialServiceRequiredInput) {
+
+        CommercialServiceResultContract commercialServiceResultContract = createTransactionalEventAndPublishIt(commercialServiceName);
         /**
          * check if commercial service has been enabled by admin at the moment
          */
@@ -49,7 +51,6 @@ public class ClientAbstractionLayerOverService implements ClientAbstractionLayer
 
         Optional<CommercialService> commercialServiceOptional = commercialServiceRepository.findById(commercialServiceName);
         commercialServiceOptional.orElseThrow(()->new CommercialServiceNotReachableException(commercialServiceName));
-        CommercialServiceResultContract commercialServiceResultContract = createTransactionalEventAndPublishIt(commercialServiceName);
 
         CommercialService commercialService = commercialServiceOptional.get();
         /**
