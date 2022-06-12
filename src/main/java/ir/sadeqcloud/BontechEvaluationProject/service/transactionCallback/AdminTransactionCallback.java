@@ -5,12 +5,14 @@ import ir.sadeqcloud.BontechEvaluationProject.utils.OperationResultContextHolder
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
+import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 @Component
 public class AdminTransactionCallback {
 
     /**
-     * transaction synchronization
+     * transaction synchronization ( see TransactionSynchronizationManager class)
      * in other words,it is a way of registering callback methods to be invoked when the transaction is being completed
      */
     @TransactionalEventListener(phase = TransactionPhase.AFTER_ROLLBACK)
