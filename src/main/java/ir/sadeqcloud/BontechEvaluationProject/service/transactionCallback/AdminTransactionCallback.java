@@ -14,6 +14,9 @@ public class AdminTransactionCallback {
     /**
      * transaction synchronization ( see TransactionSynchronizationManager class)
      * in other words,it is a way of registering callback methods to be invoked when the transaction is being completed
+     *
+     * Transaction synchronization allows the application server to be notified before and after the transaction completes.
+     * For each transaction started, the application server may optionally register a Synchronization callback object to be invoked by the transaction manager either before or after completion.
      */
     @TransactionalEventListener(phase = TransactionPhase.AFTER_ROLLBACK)
     public void transactionUnsuccessful(OperationResult operationResult){
