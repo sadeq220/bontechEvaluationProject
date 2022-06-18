@@ -2,6 +2,7 @@ package ir.sadeqcloud.BontechEvaluationProject.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -32,6 +33,7 @@ public class SecurityConfig {
                  .antMatchers("/swagger-ui/**").permitAll()
                  .antMatchers("/swagger-ui.html/**").permitAll()
                  .antMatchers("/v3/api-docs/**").permitAll()
+                 .antMatchers(HttpMethod.GET,"/").permitAll()
                  .antMatchers("/ADMIN/**").hasRole("ADMIN")
                  .anyRequest().authenticated();
          httpSecurity.httpBasic();
